@@ -1,0 +1,202 @@
+/* Appointment.css */
+
+/* Overall container for the page */
+.book-appointment-container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 2rem;
+  background: linear-gradient(to right, #e0f7fa, #ffffff);
+  min-height: 100vh;
+}
+
+/* Navbar style */
+.navbar {
+  background: linear-gradient(90deg, #0077b6, #00b4d8);
+  color: white;
+  padding: 1.5rem;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 119, 182, 0.5);
+  transition: box-shadow 0.3s ease;
+}
+
+.navbar:hover {
+  box-shadow: 0 6px 20px rgba(0, 119, 182, 0.8);
+}
+
+/* Doctor list section */
+.doctor-list {
+  margin-top: 2rem;
+}
+
+/* Remove bullet points from the list */
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+/* Styling for doctor cards */
+.doctor-card {
+  background-color: white;
+  margin: 1.5rem 0;
+  padding: 1.5rem;
+  border-radius: 20px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.doctor-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Content inside the doctor card */
+.doctor-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.doctor-info {
+  flex: 1;
+}
+
+.doctor-info h3 {
+  margin-bottom: 0.5rem;
+  color: #0077b6;
+}
+
+.doctor-info p {
+  margin: 0.2rem 0;
+  color: #555;
+}
+
+/* Doctor's image */
+.doctor-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-left: 1rem;
+  border: 3px solid #00b4d8;
+}
+
+/* Section for available dates */
+.available-dates {
+  margin-top: 1.2rem;
+}
+
+.date-list {
+  display: flex;
+  overflow-x: auto;
+  margin-top: 0.5rem;
+  gap: 1rem;
+  padding-bottom: 0.5rem;
+}
+
+.date-pill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #eeeeee;
+  border-radius: 15px;
+  padding: 0.6rem 1.2rem;
+  min-width: 70px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  color: #333;
+}
+
+.date-pill:hover {
+  background-color: #00b4d8;
+  color: white;
+}
+
+.slot-list {
+  margin-top: 1rem;
+}
+
+.slot-pill-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-top: 0.5rem;
+}
+
+.slot-pill {
+  background-color: #4caf50;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.slot-pill:hover {
+  background-color: #388e3c;
+}
+
+/* Selected slot styling */
+.selected-slot {
+  background-color: #f57c00; /* Orange for selected slot */
+  color: white;
+}
+
+/* Fill Form button styling */
+.fill-form-button {
+  background: linear-gradient(90deg, #0077b6, #00b4d8);
+  color: white;
+  padding: 10px 20px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.fill-form-button:hover {
+  background: linear-gradient(90deg, #005f73, #00b4d8);
+  transform: scale(1.05);
+}
+
+/* Responsive styling for mobile */
+@media (max-width: 768px) {
+  .doctor-card {
+    padding: 1rem;
+  }
+
+  .doctor-info h3 {
+    font-size: 1.2rem;
+  }
+
+  .doctor-info p {
+    font-size: 0.9rem;
+  }
+
+  .doctor-image {
+    width: 80px;
+    height: 80px;
+  }
+
+  .date-pill {
+    min-width: 60px;
+    font-size: 0.9rem;
+    padding: 0.5rem;
+  }
+
+  .slot-pill {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.8rem;
+  }
+
+  .fill-form-button {
+    width: 100%;
+    font-size: 0.9rem;
+  }
+}

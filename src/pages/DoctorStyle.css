@@ -1,0 +1,53 @@
+.doctor-form-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 25px;
+    background-color: #fdfdfd;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+  }
+  
+  .doctor-form-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .doctor-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .doctor-form label {
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    color: #444;
+  }
+  
+  .doctor-form input {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-top: 5px;
+  }
+  
+  .doctor-form button {
+    padding: 12px;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    font-size: 15px;
+    font-weight: 500;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .doctor-form button:hover {
+    background-color: #0056b3;
+  }
+  
