@@ -11,6 +11,7 @@ const DoctorForm = () => {
     experienceYears: '',
     registrationNumber: '',
     location: '',
+    email: '',
   });
   const [profileImage, setProfileImage] = useState(null);
   const [showModel,setShowModel] = useState(false);
@@ -34,7 +35,7 @@ const DoctorForm = () => {
 
     formData.append('doctorJson', JSON.stringify(doctor));
     try {
-      const response = await fetch('http://localhost:8081/api/doctors', {
+      const response = await fetch('http://localhost:8081/api/doctors/creating', {
         method: 'POST',
         body: formData,
       });
@@ -45,10 +46,12 @@ const DoctorForm = () => {
         setDoctor({
           name: '',
           qualifications: '',
+          registrationNumber: '',
           specialization: '',
           languages: '',
           experienceYears: '',
           location: '',
+          email: '',
         });
         setProfileImage(null);
       } else {
@@ -115,7 +118,16 @@ const DoctorForm = () => {
             required
           />
         </label>
-
+        <label>
+          Email:
+          <input
+            type="email"
+            name="email"
+            value={doctor.email}
+            onChange={handleChange}
+            required
+          />
+        </label>
         <label>
           Specialization:
           <input

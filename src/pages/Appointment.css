@@ -1,202 +1,163 @@
-/* Appointment.css */
-
-/* Overall container for the page */
+/* Container styles */
 .book-appointment-container {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   padding: 2rem;
-  background: linear-gradient(to right, #e0f7fa, #ffffff);
+  background-color: #f0f4f8;
   min-height: 100vh;
 }
 
-/* Navbar style */
+/* Navbar styling */
 .navbar {
-  background: linear-gradient(90deg, #0077b6, #00b4d8);
+  background-color: #003366;
   color: white;
-  padding: 1.5rem;
+  padding: 1.2rem 2rem;
   text-align: center;
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: bold;
   border-radius: 12px;
   margin-bottom: 2rem;
-  box-shadow: 0 4px 12px rgba(0, 119, 182, 0.5);
-  transition: box-shadow 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
-.navbar:hover {
-  box-shadow: 0 6px 20px rgba(0, 119, 182, 0.8);
+/* Section heading */
+.doctor-list h2 {
+  color: #003366;
+  font-size: 1.4rem;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
 }
 
-/* Doctor list section */
-.doctor-list {
-  margin-top: 2rem;
-}
-
-/* Remove bullet points from the list */
+/* Remove list styles */
 ul {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
-/* Styling for doctor cards */
+/* Doctor card */
 .doctor-card {
-  background-color: white;
-  margin: 1.5rem 0;
+  background-color: #ffffff;
+  border: 2px solid #cce4f7;
+  border-left: 5px solid #007bff;
+  border-radius: 12px;
   padding: 1.5rem;
-  border-radius: 20px;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
 }
 
 .doctor-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  transform: translateY(-4px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
 }
 
-/* Content inside the doctor card */
+.doctor-card.selected {
+  background-color: #e6f2ff;
+  border-color: #0056b3;
+}
+
+/* Layout inside card */
 .doctor-content {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
 }
 
+/* Doctor details */
 .doctor-info {
   flex: 1;
 }
 
 .doctor-info h3 {
-  margin-bottom: 0.5rem;
-  color: #0077b6;
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #003366;
 }
 
 .doctor-info p {
-  margin: 0.2rem 0;
-  color: #555;
+  margin: 0.4rem 0;
+  color: #333;
+  font-size: 0.95rem;
 }
 
-/* Doctor's image */
+/* Doctor image styling */
 .doctor-image {
   width: 100px;
   height: 100px;
   object-fit: cover;
   border-radius: 50%;
-  margin-left: 1rem;
-  border: 3px solid #00b4d8;
+  border: 3px solid #007bff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Section for available dates */
+/* Date list styling */
 .available-dates {
-  margin-top: 1.2rem;
-}
-
-.date-list {
-  display: flex;
-  overflow-x: auto;
-  margin-top: 0.5rem;
-  gap: 1rem;
-  padding-bottom: 0.5rem;
-}
-
-.date-pill {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #eeeeee;
-  border-radius: 15px;
-  padding: 0.6rem 1.2rem;
-  min-width: 70px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  color: #333;
-}
-
-.date-pill:hover {
-  background-color: #00b4d8;
-  color: white;
-}
-
-.slot-list {
   margin-top: 1rem;
 }
 
-.slot-pill-container {
+.date-list {
+  margin-top: 0.7rem;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.8rem;
-  margin-top: 0.5rem;
+  gap: 0.6rem;
 }
 
-.slot-pill {
-  background-color: #4caf50;
-  color: white;
+.date-pill {
+  background-color: #e3f2fd;
+  color: #0277bd;
   padding: 0.5rem 1rem;
   border-radius: 20px;
+  cursor: pointer;
   font-size: 0.9rem;
+  transition: all 0.25s ease;
+}
+
+.date-pill:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.date-pill.selected {
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+  border: 1px solid #005bb5;
+}
+
+/* Button styling */
+.fill-form-button {
+  margin-top: 1.2rem;
+  background-color: #007bff;
+  color: white;
+  padding: 0.7rem 1.5rem;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-.slot-pill:hover {
-  background-color: #388e3c;
-}
-
-/* Selected slot styling */
-.selected-slot {
-  background-color: #f57c00; /* Orange for selected slot */
-  color: white;
-}
-
-/* Fill Form button styling */
-.fill-form-button {
-  background: linear-gradient(90deg, #0077b6, #00b4d8);
-  color: white;
-  padding: 10px 20px;
-  margin-top: 15px;
-  border: none;
-  border-radius: 30px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background 0.3s ease, transform 0.3s ease;
-}
-
 .fill-form-button:hover {
-  background: linear-gradient(90deg, #005f73, #00b4d8);
-  transform: scale(1.05);
+  background-color: #0056b3;
 }
 
-/* Responsive styling for mobile */
+/* Responsive */
 @media (max-width: 768px) {
-  .doctor-card {
-    padding: 1rem;
-  }
-
-  .doctor-info h3 {
-    font-size: 1.2rem;
-  }
-
-  .doctor-info p {
-    font-size: 0.9rem;
+  .doctor-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
 
   .doctor-image {
-    width: 80px;
-    height: 80px;
-  }
-
-  .date-pill {
-    min-width: 60px;
-    font-size: 0.9rem;
-    padding: 0.5rem;
-  }
-
-  .slot-pill {
-    font-size: 0.8rem;
-    padding: 0.4rem 0.8rem;
+    margin-top: 1rem;
   }
 
   .fill-form-button {
     width: 100%;
-    font-size: 0.9rem;
   }
 }

@@ -1,81 +1,170 @@
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import './patientformcss.css'
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import './patientformcss.css';
+
 const PatientForm = () => {
-  const { scheduleId } = useParams();
-  const [patient, setPatient] = useState({
-    name: '',
-    gender: '',
-    age: '',
-    contact: '',
+  const navigate = useNavigate();
+  const { doctorId, slotDate} = useParams();
+
+
+  const [selectedDoctorId, setSelectedDoctorId] = useState(doctorId || '');
+  const [selectedDate, setSelectedDate] = useState(slotDate || '');
+  const [selectedSlot, setSelectedSlot] = useState('');
+  const [availableSlots, setAvailableSlots] = useState([]);
+
+  const [patientData, setPatientData] = useState({
+    firstName: "",
+    lastName: "",
+    gender: "MALE",
+    dateOfBirth: "",
+    aadhar: "",
+    email: "",
+    phoneNumber: "",
+    address: "",
+    bloodGroup: "O_POSITIVE"
   });
 
-  const handleChange = (e) => {
-    setPatient({ ...patient, [e.target.name]: e.target.value });
+  // Fetch available slots
+  useEffect(() => {
+    if (selectedDoctorId && selectedDate) {
+      fetch(`http://localhost:8081/api/doctors/available/slots/timings/${selectedDoctorId}?date=${selectedDate}`)
+        .then(res => res.json())
+        .then(data => {
+          if (Array.isArray(data)) {
+            setAvailableSlots(data);
+            console.error("Expected an array but got:", data);
+          } else {
+            setAvailableSlots([]); // fallback in case response isn't array
+            console.error("Expected an array but got:", data);
+          }
+        })
+        .catch(err => {
+          console.error("Failed to fetch slots", err);
+          setAvailableSlots([]);
+        });
+    }
+  }, [selectedDoctorId, selectedDate]);
+  
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setPatientData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const appointmentData = {
-      scheduleId: scheduleId,
-      patientDetails: patient
-    };
-
-    try {
-      const response = await fetch('http://localhost:8082/api/appointments', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(appointmentData)
-      });
-
-      if (response.ok) {
-        alert('Appointment booked successfully!');
-      } else {
-        alert('Failed to book appointment.');
-      }
-    } catch (error) {
-      console.error('Error booking appointment:', error);
+  const handleBookSlotClick = () => {
+    if (!selectedDoctorId || !selectedDate || !selectedSlot) {
+      alert("Please select doctor, date, and slot.");
+      return;
     }
+
+    const confirmBooking = window.confirm("Are you sure you want to book this slot?");
+    if (!confirmBooking) return;
+
+    fetch(`http://localhost:8082/api/patients?doctorId=${selectedDoctorId}&slotDate=${selectedDate}&slotStartTime=${selectedSlot}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(patientData)
+    })
+      .then(res => res.ok ? res.text() : res.text().then(text => { throw new Error(text); }))
+      .then(data => {
+        alert("Success: " + data);
+        navigate("/confirmation");
+      })
+      .catch(err => alert("Error booking slot: " + err.message));
   };
 
   return (
-    <div>
-      <h2>Fill Patient Details</h2>
-      <form onSubmit={handleSubmit}>
-        <input 
-          type="text" 
-          name="name" 
-          placeholder="Name"
-          value={patient.name}
-          onChange={handleChange}
-          required
-        />
-        <input 
-          type="text" 
-          name="gender" 
-          placeholder="Gender"
-          value={patient.gender}
-          onChange={handleChange}
-          required
-        />
-        <input 
-          type="number" 
-          name="age" 
-          placeholder="Age"
-          value={patient.age}
-          onChange={handleChange}
-          required
-        />
-        <input 
-          type="text" 
-          name="contact" 
-          placeholder="Contact Number"
-          value={patient.contact}
-          onChange={handleChange}
-          required
-        />
-        <button type="submit">Book Appointment</button>
-      </form>
+    <div className="patient-form-container">
+      <h2 className="patient-form-heading">Book Appointment</h2>
+
+      {/* <div className="patient-form-group">
+        <label className="patient-form-label">Select Date:</label>
+        <input type="date" className="patient-form-input" value={selectedDate} onChange={(e) => setSelectedDate(e.target.value)} />
+      </div> */}
+      <div className="patient-form-group">
+  <label className="patient-form-label">Selected Date:</label>
+  <input
+    type="date"
+    className="patient-form-input"
+    value={selectedDate}
+    readOnly
+  />
+</div>
+
+
+      <div className="patient-form-group">
+  <label className="patient-form-label">Select Slot:</label>
+  <select
+    className="patient-form-select"
+    value={selectedSlot}
+    onChange={(e) => setSelectedSlot(e.target.value)}
+  >
+    <option value="">-- Select Slot --</option>
+    {availableSlots.map((s, index) => (
+      <option key={index} value={s.slot}>
+        {s.slot}
+      </option>
+    ))}
+  </select>
+</div>
+
+
+
+      <h3>Patient Details</h3>
+
+      <div className="patient-form-group">
+        <input type="text" className="patient-form-input" name="firstName" placeholder="First Name" value={patientData.firstName} onChange={handleInputChange} />
+      </div>
+
+      <div className="patient-form-group">
+        <input type="text" className="patient-form-input" name="lastName" placeholder="Last Name" value={patientData.lastName} onChange={handleInputChange} />
+      </div>
+
+      <div className="patient-form-group">
+        <label className="patient-form-label">Gender:</label>
+        <select className="patient-form-select" name="gender" value={patientData.gender} onChange={handleInputChange}>
+          <option value="MALE">Male</option>
+          <option value="FEMALE">Female</option>
+          <option value="OTHER">Other</option>
+        </select>
+      </div>
+
+      <div className="patient-form-group">
+        <label className="patient-form-label">Date of Birth:</label>
+        <input type="date" className="patient-form-input" name="dateOfBirth" value={patientData.dateOfBirth} onChange={handleInputChange} />
+      </div>
+
+      <div className="patient-form-group">
+        <input type="text" className="patient-form-input" name="aadhar" placeholder="Aadhar Number" value={patientData.aadhar} onChange={handleInputChange} />
+      </div>
+
+      <div className="patient-form-group">
+        <input type="email" className="patient-form-input" name="email" placeholder="Email" value={patientData.email} onChange={handleInputChange} />
+      </div>
+
+      <div className="patient-form-group">
+        <input type="text" className="patient-form-input" name="phoneNumber" placeholder="Phone Number" value={patientData.phoneNumber} onChange={handleInputChange} />
+      </div>
+
+      <div className="patient-form-group">
+        <input type="text" className="patient-form-input" name="address" placeholder="Address" value={patientData.address} onChange={handleInputChange} />
+      </div>
+
+      <div className="patient-form-group">
+        <label className="patient-form-label">Blood Group:</label>
+        <select className="patient-form-select" name="bloodGroup" value={patientData.bloodGroup} onChange={handleInputChange}>
+          <option value="O_POSITIVE">O+</option>
+          <option value="O_NEGATIVE">O-</option>
+          <option value="A_POSITIVE">A+</option>
+          <option value="A_NEGATIVE">A-</option>
+          <option value="B_POSITIVE">B+</option>
+          <option value="B_NEGATIVE">B-</option>
+          <option value="AB_POSITIVE">AB+</option>
+          <option value="AB_NEGATIVE">AB-</option>
+        </select>
+      </div>
+
+      <button className="patient-form-button" onClick={handleBookSlotClick}>Book Slot</button>
     </div>
   );
 };

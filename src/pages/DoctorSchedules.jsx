@@ -19,7 +19,7 @@ const DoctorSchedule = () => {
     try {
       // Make POST request to backend to schedule availability
       const response = await axios.post(
-        `http://localhost:8080/api/doctor/availability/${doctorId}`,
+        `http://localhost:8081/api/doctors/${doctorId}/set-availability`,
         {},
         { params: { availableDate: formattedDate } }
       );

@@ -21,9 +21,7 @@ const FirstPage = () => {
           <Link to="/login">
             <button className="login-button">Login</button>
           </Link>
-          <button className="signup-button" onClick={handleSignUp}>
-            Sign Up
-          </button>
+         
         </div>
       </nav>
 

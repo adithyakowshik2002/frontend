@@ -7,9 +7,6 @@ function BookAppointmentPage() {
   const [selectedDoctorId, setSelectedDoctorId] = useState(null);
   const [availableDates, setAvailableDates] = useState({});
   const [selectedDate, setSelectedDate] = useState(null);
-  const [availableSlots, setAvailableSlots] = useState({});
-  const [selectedSlot, setSelectedSlot] = useState(null);
-  const [selectedScheduleId, setSelectedScheduleId] = useState(null);
 
   const navigate = useNavigate();
 
@@ -25,17 +22,11 @@ function BookAppointmentPage() {
       // Deselect if already selected
       setSelectedDoctorId(null);
       setSelectedDate(null);
-      setAvailableSlots({});
-      setSelectedSlot(null);
-      setSelectedScheduleId(null);
       return;
     }
 
     setSelectedDoctorId(doctorId);
     setSelectedDate(null);
-    setAvailableSlots({});
-    setSelectedSlot(null);
-    setSelectedScheduleId(null);
 
     if (!availableDates[doctorId]) {
       fetch(`http://localhost:8081/api/doctors/schedule-dates/${doctorId}`)
@@ -54,37 +45,14 @@ function BookAppointmentPage() {
 
   const handleDateClick = (doctorId, date) => {
     setSelectedDate(date);
-    setAvailableSlots({});
-    setSelectedSlot(null);
-    setSelectedScheduleId(null);
-
-    fetch(`http://localhost:8081/api/doctors/available/slots/timings/${doctorId}?date=${date}`)
-      .then((res) => res.json())
-      .then((slots) => {
-        setAvailableSlots((prev) => ({
-          ...prev,
-          [doctorId]: { ...(prev[doctorId] || {}), [date]: slots }
-        }));
-      })
-      .catch((error) => {
-        console.error('Error fetching slots:', error);
-      });
-  };
-
-  const handleSlotClick = (doctorId, date, slot) => {
-    setSelectedSlot(slot);
-
-    fetch(`http://localhost:8081/api/doctors/get-schedule-id/${doctorId}?date=${date}&time=${slot}`)
-      .then((res) => res.json())
-      .then((scheduleId) => {
-        setSelectedScheduleId(scheduleId);
-      })
-      .catch((error) => console.error('Error fetching scheduleId:', error));
   };
 
   const handleFillFormClick = () => {
-    if (selectedScheduleId) {
-      navigate(`/fill-patient-form/${selectedScheduleId}`);
+    if (selectedDoctorId && selectedDate) {
+      navigate(`/fill-patient-form/${selectedDoctorId}/${selectedDate}`);
+    }
+    else{
+      alert("Please select a doctor and a date before proceeding.");
     }
   };
 
@@ -141,40 +109,11 @@ function BookAppointmentPage() {
                       ))}
                     </div>
 
-                    {/* Show slots only if a date is selected */}
-                    {selectedDate && availableSlots[doc.id]?.[selectedDate] && (
-                      <div className="slot-list">
-                        <strong>Available Slots:</strong>
-                        <div className="slot-pill-container">
-                          {availableSlots[doc.id][selectedDate].map((slot, i) => {
-                            const slotValue = typeof slot === 'object' && slot.slot ? slot.slot : slot;
-                            const isSelected = selectedSlot === slotValue;
-
-                            return (
-                              <span
-                                key={i}
-                                className={`slot-pill ${isSelected ? 'selected-slot' : ''}`}
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  handleSlotClick(doc.id, selectedDate, slotValue);
-                                }}
-                              >
-                                {slotValue}
-                              </span>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Show Fill Form button only if a slot is selected */}
-                    {selectedSlot && (
-                      <div style={{ marginTop: '1rem' }}>
-                        <button className="fill-form-button" onClick={handleFillFormClick}>
-                          Fill Patient Form
-                        </button>
-                      </div>
-                    )}
+                    <div style={{ marginTop: '1rem' }}>
+                      <button className="fill-form-button" onClick={handleFillFormClick}>
+                        Fill Patient Form
+                      </button>
+                    </div>
                   </div>
                 )}
               </li>
@@ -189,3 +128,4 @@ function BookAppointmentPage() {
 }
 
 export default BookAppointmentPage;
+
