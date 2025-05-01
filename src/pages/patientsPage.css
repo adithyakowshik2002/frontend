@@ -1,0 +1,43 @@
+.patients-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .patients-title {
+    font-size: 28px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #2c3e50;
+  }
+  
+  .patient-card {
+    background-color: #f9f9f9;
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .patient-card:hover {
+    transform: scale(1.02);
+    border-color: #3498db;
+  }
+  
+  .patient-card strong {
+    color: #34495e;
+  }
+  
+  .error-message {
+    color: red;
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .loading-message {
+    text-align: center;
+    font-style: italic;
+  }
