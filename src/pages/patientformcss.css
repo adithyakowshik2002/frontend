@@ -1,55 +1,110 @@
+.doctor-form-container {
+  max-width: 580px;
+  margin: 30px auto;
+  padding: 24px;
+  background-color: #fdfdfd;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.doctor-form-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.doctor-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.doctor-form label {
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  color: #444;
+}
+
+.doctor-form input {
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-top: 5px;
+}
+
+.doctor-form button {
+  padding: 12px;
+  background-color: #007bff;
+  border: none;
+  color: white;
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.doctor-form button:hover {
+  background-color: #0056b3;
+}
+
 .patient-form-container {
   max-width: 600px;
-  margin: 30px auto;
-  padding: 25px;
-  background-color: #fdfdfd;
-  border-radius: 10px;
+  margin: 40px auto;
+  padding: 24px;
+  background-color: #ffffff;
   box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 .patient-form-heading {
   text-align: center;
   margin-bottom: 20px;
   color: #333;
-  font-size: 1.8rem;
 }
 
 .patient-form-group {
+  display: flex;
+  flex-direction: column;
   margin-bottom: 15px;
 }
 
 .patient-form-label {
-  display: block;
-  margin-bottom: 6px;
-  font-weight: 600;
+  font-weight: bold;
+  margin-bottom: 5px;
+  font-size: 14px;
   color: #444;
 }
 
 .patient-form-input,
 .patient-form-select {
-  width: 100%;
   padding: 10px;
-  font-size: 0.95rem;
+  font-size: 14px;
   border: 1px solid #ccc;
-  border-radius: 5px;
-  box-sizing: border-box;
+  border-radius: 6px;
 }
 
 .patient-form-button {
-  width: 100%;
   padding: 12px;
-  background-color: #0077cc;
-  color: #fff;
-  font-weight: bold;
+  background-color: #28a745;
   border: none;
+  color: white;
+  font-size: 15px;
+  font-weight: 500;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 1rem;
-  margin-top: 10px;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  margin-top: 20px;
 }
 
 .patient-form-button:hover {
-  background-color: #005fa3;
+  background-color: #218838;
 }
-

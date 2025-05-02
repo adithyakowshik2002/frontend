@@ -81,6 +81,7 @@ const DoctorForm = () => {
             name="profileImage"
             onChange={handleImageChange}
             accept="image/*"
+            placeholder='Select Profile Image'
             required
           />
         </label>
@@ -90,6 +91,7 @@ const DoctorForm = () => {
           <input
             type="text"
             name="name"
+            placeholder='Enter Doctor Name'
             value={doctor.name}
             onChange={handleChange}
             required
@@ -101,6 +103,7 @@ const DoctorForm = () => {
           <input
             type="text"
             name="registrationNumber"
+            placeholder='Enter Registration Number'
             value={doctor.registrationNumber}
             onChange={handleChange}
             required
@@ -113,6 +116,7 @@ const DoctorForm = () => {
           <input
             type="text"
             name="qualifications"
+            placeholder='Enter Qualifications'
             value={doctor.qualifications}
             onChange={handleChange}
             required
@@ -123,6 +127,7 @@ const DoctorForm = () => {
           <input
             type="email"
             name="email"
+            placeholder='Enter Email'
             value={doctor.email}
             onChange={handleChange}
             required
@@ -133,6 +138,7 @@ const DoctorForm = () => {
           <input
             type="text"
             name="specialization"
+            placeholder='Enter Specialization'
             value={doctor.specialization}
             onChange={handleChange}
             required
@@ -144,6 +150,7 @@ const DoctorForm = () => {
           <input
             type="text"
             name="languages"
+            placeholder='Enter Languages Known'
             value={doctor.languages}
             onChange={handleChange}
             required
@@ -155,6 +162,7 @@ const DoctorForm = () => {
           <input
             type="number"
             name="experienceYears"
+            placeholder='Enter Years of Experience'
             value={doctor.experienceYears}
             onChange={handleChange}
             required
@@ -166,6 +174,7 @@ const DoctorForm = () => {
           <input
             type="text"
             name="location"
+            placeholder='Enter Location'
             value={doctor.location}
             onChange={handleChange}
             required
@@ -179,6 +188,7 @@ const DoctorForm = () => {
         <p>{modelMessage}</p>
         <button onClick={closeModel}>Close</button>
       </div>}
+      <button className="back-button" onClick={() => window.history.back()}>← Back</button>
     </div>
   );
 };

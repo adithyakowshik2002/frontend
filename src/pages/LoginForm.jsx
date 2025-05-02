@@ -23,7 +23,8 @@ const LoginForm = () => {
       localStorage.setItem('jwt', response.data.jwt);
       localStorage.setItem('role', response.data.role);  // Save the role
       localStorage.setItem('fullName', response.data.fullName);
-      localStorage.setItem('id', response.data.id); // Save the user ID
+      localStorage.setItem('id', response.data.id); 
+      localStorage.setItem('email',response.data.email);// Save the user ID
 
       // Navigate based on role
       const role = response.data.role;
