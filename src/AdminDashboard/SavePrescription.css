@@ -1,0 +1,22 @@
+.prescription-container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+  }
+  
+  .medicine-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  
+  input {
+    padding: 8px;
+    flex: 1;
+  }
+  
+  button {
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+  

@@ -11,7 +11,7 @@ function BookAppointmentPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('http://localhost:8081/api/doctors/getalldoctors')
+    fetch('http://localhost:9090/api/doctors/getalldoctors')
       .then((response) => response.json())
       .then((data) => setDoctors(data))
       .catch((error) => console.error('Error fetching doctors:', error));
@@ -29,7 +29,7 @@ function BookAppointmentPage() {
     setSelectedDate(null);
 
     if (!availableDates[doctorId]) {
-      fetch(`http://localhost:8081/api/doctors/schedule-dates/${doctorId}`)
+      fetch(`http://localhost:9090/api/doctors/schedule-dates/${doctorId}`)
         .then((res) => res.json())
         .then((dates) => {
           setAvailableDates((prevDates) => ({

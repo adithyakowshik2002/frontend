@@ -1,0 +1,58 @@
+.patients-container {
+    max-width: 90%;
+    margin: 0 auto;
+max-height: 90vh;
+    padding: 20px;
+  }
+  
+  .heading {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .card-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom:20px ;
+  }
+  
+  .card {
+    background-color: #e2e7dc;
+    border: 1px solid #ccc;
+    padding: 5px;
+    width: 90%; 
+    max-height:  500px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .card-line {
+    display: flex;
+    margin: 5px 0;
+    font-size: 16px;
+  }
+  
+  .card-actions-patient {
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px; /* This will apply spacing between buttons */
+  }
+  
+  
+  .btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding-right: 5px;
+  }
+  
+  .btn:hover {
+    background-color: #0056b3;
+  }
+  

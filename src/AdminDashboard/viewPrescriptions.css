@@ -1,0 +1,49 @@
+.prescriptions-container {
+    padding: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+  }
+  
+  .prescriptions-container h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+  }
+  
+  .prescription-section {
+    margin-bottom: 40px;
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #fafafa;
+  }
+  
+  .prescription-header p {
+    margin: 5px 0;
+    font-weight: 500;
+    color: #333;
+  }
+  
+  .medicine-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+  }
+  
+  .medicine-table th,
+  .medicine-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .medicine-table th {
+    background-color: #f0f0f0;
+    color: #000;
+  }
+  
+  .medicine-table tbody tr:hover {
+    background-color: #f9f9f9;
+  }
+  

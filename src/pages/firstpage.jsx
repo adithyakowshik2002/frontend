@@ -21,7 +21,7 @@ const FirstPage = () => {
           <Link to="/login">
             <button className="login-button">Login</button>
           </Link>
-         
+        
         </div>
       </nav>
 
@@ -30,9 +30,7 @@ const FirstPage = () => {
         <Link to="/book-appointment">
           <button className="appointment-button">Book Appointment</button>
         </Link>
-        <Link to="/add-doctor">
-          <button className="add-doctor-button">Add Doctor</button>
-        </Link>
+      
       </div>
     </div>
   );
