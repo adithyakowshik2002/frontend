@@ -32,6 +32,7 @@ function BookAppointmentPage() {
       fetch(`http://localhost:9090/api/doctors/schedule-dates/${doctorId}`)
         .then((res) => res.json())
         .then((dates) => {
+          console.log(dates);
           setAvailableDates((prevDates) => ({
             ...prevDates,
             [doctorId]: dates,

@@ -1,47 +1,53 @@
+/* Dashboard.css */
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #e0f7fa, #d1c4e9);
+}
+
 .dashboard-container {
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
-  
-  .dashboard-title {
-    text-align: center;
-    font-size: 32px;
-    margin-bottom: 20px;
-    color: #2c3e50;
-  }
-  
-  .dashboard-nav {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 15px;
-    margin-bottom: 30px;
-  }
-  
-  .dashboard-nav a {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    text-decoration: none;
-    border-radius: 8px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .dashboard-nav a:hover {
-    background-color: #0056b3;
-  }
-  
-  @media (max-width: 768px) {
-    .dashboard-nav {
-      flex-direction: column;
-      align-items: center;
-    }
-  
-    .dashboard-nav a {
-      width: 80%;
-      text-align: center;
-    }
-  }
-  
+  max-width: 600px;
+  margin: 60px auto;
+  padding: 30px 25px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.dashboard-container:hover {
+  transform: translateY(-3px);
+}
+
+.dashboard-title {
+  font-size: 2rem;
+  color: #3f51b5;
+  margin-bottom: 30px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.dashboard-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.dashboard-nav a {
+  text-decoration: none;
+  font-size: 1rem;
+  padding: 10px 20px;
+  border-radius: 10px;
+  color: white;
+  background: linear-gradient(to right, #42a5f5, #7e57c2);
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.dashboard-nav a:hover {
+  background: linear-gradient(to right, #5c6bc0, #ab47bc);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+}

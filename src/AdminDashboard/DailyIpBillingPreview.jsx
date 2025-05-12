@@ -27,7 +27,7 @@ const IpBillingPreview = () => {
       const response = await axios.post(`http://localhost:9090/api/billing/ip/daily-log/${appointmentId}`);
       setMessage('IP Bill successfully generated need to be paid');
     } catch (error) {
-      setMessage('Failed to generate IP bill');
+      setMessage('Failed to generate IP bill or already generated');
     } finally {
       setLoading(false);
     }

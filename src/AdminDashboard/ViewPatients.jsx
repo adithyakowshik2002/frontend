@@ -54,6 +54,10 @@ function ViewPatients() {
       }
     });
   };
+  const handleViewAppointments = (patientId) => {
+    navigate('/view-appointments', { state: { patientId } });
+  };
+  
   
   const handleGenerateBill = (patient) => {
     if (!patient.appointments || patient.appointments.length === 0) {
@@ -99,7 +103,7 @@ function ViewPatients() {
 
             <div className="card-actions-patient">
               <button className="btn" onClick={() => handleGenerateBill(patient)}>Generate Bill</button>
-              <button className="btn">View Appointments</button>
+              <button className="btn" onClick={()=>handleViewAppointments(patient.id)}>View Appointments</button>
               <button className="btn" onClick={() => handleViewPrescriptions(patient.id)}>View Prescriptions</button>
 
               <button className="btn" onClick={() => handleGenerateIpDailyLog(patient)}>

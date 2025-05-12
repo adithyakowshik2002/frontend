@@ -19,7 +19,10 @@ import BillingPage from './AdminDashboard/BillingPage';
 import SavePrescription from './AdminDashboard/SavePrescription';
 import ViewPrescriptions from './AdminDashboard/ViewPrescriptions';
 import FetchBillingInfo from './AdminDashboard/FetchBillingInfo';
-import IpBillingPreview from './AdminDashboard/IpBillingPreview';
+import DailyIpBillingPreview from './AdminDashboard/DailyIpBillingPreview';
+import ViewAppointments from './AdminDashboard/ViewAppointments';
+import DoctorAppointments from './AdminDashboard/DoctorAppointments';
+import UpdateDoctorForm from './AdminDashboard/UpdateDoctorForm';
 
 function App() {
   return (
@@ -37,17 +40,20 @@ function App() {
   element={<PatientForm />}
 
 />
+      <Route path="/edit-doctordata/:doctorId" element={<UpdateDoctorForm />} /> 
+      <Route path="/view-appointments" element={<ViewAppointments />} />
+
 <Route path="/save-prescription" element={<SavePrescription />} />
 <Route path="/view-prescriptions" element={<ViewPrescriptions />} />
 <Route path="/view-billing" element={<FetchBillingInfo />} />
 
-<Route path="/daily-ip-billing" element={<IpBillingPreview/>} />
+<Route path="/daily-ip-billing" element={<DailyIpBillingPreview/>} />
 <Route path="/billing" element={<BillingPage />} />
 <Route path="/register-doctor" element={<RegisterDoctor />} />
           <Route path="/book-appointment" element={<BookAppointment />} />
           <Route path="/view-doctors" element={<ViewDoctors />} />
           <Route path="/view-patients" element={<ViewPatients />} />
-
+          <Route path="/doctor-appointments/:doctorId" element={<DoctorAppointments />} />
       {/* Temporarily comment these out */}
       {/* <Route path="/admin/dashboard" element={<AdminDashboard />} /> */}
       {/* <Route path="/unauthorized" element={<Unauthorized />} /> */}

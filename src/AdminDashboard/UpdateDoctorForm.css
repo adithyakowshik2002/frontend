@@ -1,0 +1,78 @@
+/* Container Styling */
+.update-doctor-form-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #f9fafb;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  /* Form Header */
+  .update-doctor-form-container h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #2c3e50;
+  }
+  
+  /* Label Styling */
+  .update-doctor-form-container label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+    color: #333;
+  }
+  
+  /* Input Fields */
+  .update-doctor-form-container input[type="text"],
+  .update-doctor-form-container input[type="email"],
+  .update-doctor-form-container input[type="number"],
+  .update-doctor-form-container input[type="file"],
+  .update-doctor-form-container input {
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+  }
+  
+  /* Read-only input style */
+  .update-doctor-form-container input[readonly] {
+    background-color: #e9ecef;
+    color: #6c757d;
+  }
+  
+  /* Submit Button */
+  .update-doctor-form-container button[type="submit"] {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    background-color: #1abc9c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .update-doctor-form-container button[type="submit"]:hover {
+    background-color: #16a085;
+  }
+  
+  /* Image Preview */
+  .update-doctor-form-container img {
+    display: block;
+    margin-top: 0.5rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+  
+  .update-doctor-form-container p {
+    font-size: 0.9rem;
+    color: #555;
+    margin-top: 0.5rem;
+  }
+  

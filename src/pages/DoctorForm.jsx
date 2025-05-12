@@ -35,7 +35,7 @@ const DoctorForm = () => {
 
     formData.append('doctorJson', JSON.stringify(doctor));
     try {
-      const response = await fetch('http://localhost:8081/api/doctors/creating', {
+      const response = await fetch('http://localhost:9090/api/doctors/creating', {
         method: 'POST',
         body: formData,
       });

@@ -50,7 +50,7 @@ function BillingPage() {
 
   const handlePayNow = () => {
     const payUrl = isIP
-      ? 'http://localhost:9090/api/billing/discharge'
+      ? 'http://localhost:9090/api/billing/discharge?appointmentId=' + appointment.appointmentId
       : `http://localhost:9090/api/billing/op/${appointment.appointmentId}`;
 
     fetch(payUrl, {

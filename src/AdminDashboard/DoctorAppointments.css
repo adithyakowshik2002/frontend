@@ -1,0 +1,106 @@
+/* DoctorAppointments.css */
+
+.appointments-container {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .appointments-title {
+    text-align: center;
+    color: #2c3e50;
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+  
+  .appointments-subtitle {
+    text-align: center;
+    color: #34495e;
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+  }
+  
+  .no-appointments {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #e74c3c;
+    font-weight: 500;
+  }
+  
+  .appointments-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  .appointments-header {
+    background-color: #3498db;
+    color: white;
+  }
+  
+  .appointments-header-cell {
+    padding: 12px 16px;
+    font-weight: bold;
+    text-align: left;
+    border: 1px solid #ddd;
+  }
+  
+  .appointments-body .appointments-row:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .appointments-row:hover {
+    background-color: #eef6fb;
+    transition: background-color 0.2s ease;
+  }
+  
+  .appointments-cell {
+    padding: 12px 16px;
+    border: 1px solid #ddd;
+    color: #2c3e50;
+    font-size: 0.95rem;
+  }
+  
+  /* Optional: Responsive table for mobile */
+  @media (max-width: 768px) {
+    .appointments-table,
+    .appointments-header,
+    .appointments-body,
+    .appointments-row,
+    .appointments-cell,
+    .appointments-header-cell {
+      display: block;
+      width: 100%;
+    }
+  
+    .appointments-header {
+      display: none;
+    }
+  
+    .appointments-row {
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 10px;
+      background-color: #fdfdfd;
+    }
+  
+    .appointments-cell {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 10px;
+      border: none;
+      border-bottom: 1px solid #eee;
+    }
+  
+    .appointments-cell::before {
+      content: attr(data-label);
+      font-weight: bold;
+      color: #555;
+    }
+  }
+  
