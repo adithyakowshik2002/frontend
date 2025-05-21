@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axiosInstance from '../assets/axiosConfig'; // Import the custom axiosInstance
 import './Loginform.css'; // Import the CSS file here
 
 const LoginForm = () => {
@@ -11,35 +11,36 @@ const LoginForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     try {
-      // Send login credentials to backend
-      const response = await axios.post('http://localhost:9090/auth/signin', {
+      const response = await axiosInstance.post('/auth/signin', {
         email,
         password
       });
+      console.log(response.data.jwt);
 
-      // On success, store JWT token in localStorage
       localStorage.setItem('jwt', response.data.jwt);
-      localStorage.setItem('role', response.data.role);  // Save the role
+      localStorage.setItem('role', response.data.role);
       localStorage.setItem('fullName', response.data.fullName);
-      localStorage.setItem('id', response.data.id); 
-      localStorage.setItem('email',response.data.email);// Save the user ID
-
-      // Navigate based on role
+      localStorage.setItem('id', response.data.id);
+      localStorage.setItem('email', response.data.email);
+        
       const role = response.data.role;
 
-      if (role === 'ROLE_ADMIN') {
-        navigate('/admin-dashboard');  // Redirect to Admin Dashboard
-      } else if (role === 'ROLE_DOCTOR') {
-        navigate('/doctor-dashboard'); // Redirect to Doctor Dashboard
+      if (role === 'ADMIN') {
+        navigate('/admin-dashboard');
+      } else if (role === 'DOCTOR') {
+        navigate('/doctor-dashboard');
       } else {
-        navigate('/login'); // Default, in case of unknown role
+        navigate('/login');
       }
     } catch (err) {
-      // Handle error (invalid credentials)
       setError('Invalid credentials. Please try again.');
     }
+  };
+
+  const handleGoHome = () => {
+    navigate('/');
   };
 
   return (
@@ -67,9 +68,10 @@ const LoginForm = () => {
             required
           />
         </div>
-        <button type="submit" className="login-btn-submit">
-          Login
-        </button>
+        <div className="button-group">
+          <button type="submit" className="login-btn-submit">Login</button>
+          <button type="button" onClick={handleGoHome} className="go-home-btn">Go to Home</button>
+        </div>
       </form>
     </div>
   );

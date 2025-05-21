@@ -1,7 +1,7 @@
 // src/pages/SignupForm.jsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axiosInstance from '../utils/axiosInstance'; // Import the axios instance
 import './Signup.css';
 
 const SignupForm = () => {
@@ -19,7 +19,7 @@ const SignupForm = () => {
     // Verify if this is a valid admin registration route
     const verifyAdminRoute = async () => {
       try {
-        const response = await axios.get('http://localhost:9090/auth/verify-admin-route');
+        const response = await axiosInstance.get('/auth/verify-admin-route');
         setIsAdminRoute(response.data.isValid);
       } catch (err) {
         navigate('/unauthorized');
@@ -39,12 +39,11 @@ const SignupForm = () => {
         role: 'admin'  // Hardcoded role for admin registration
       };
 
-      const response = await axios.post(
-        'http://localhost:8000/auth/', 
+      const response = await axiosInstance.post(
+        '/auth/', 
         adminData,
         {
           headers: {
-            'Content-Type': 'application/json',
             'x-admin-secret': process.env.REACT_APP_ADMIN_SECRET
           }
         }

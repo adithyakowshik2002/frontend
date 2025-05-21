@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axiosInstance from '../assets/axiosConfig'; // Adjust the path if your file is located elsewhere
 import './RegisterDoctor.css'; 
 
 function RegisterDoctor() {
@@ -6,7 +7,7 @@ function RegisterDoctor() {
     email: '',
     password: '',
     fullName: '',
-    role: 'ROLE_DOCTOR',
+    role: 'DOCTOR',
   });
 
   const [message, setMessage] = useState('');
@@ -22,23 +23,10 @@ function RegisterDoctor() {
     setMessage('');
 
     try {
-      const response = await fetch('http://localhost:9090/auth/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        setMessage(data.message || 'Doctor registered successfully');
-      } else {
-        const errorData = await response.json();
-        setError(errorData.message || 'Registration failed');
-      }
+      const response = await axiosInstance.post('/auth/signup', formData);
+      setMessage(response.data.message || 'Doctor registered successfully');
     } catch (err) {
-      setError('Server error: ' + err.message);
+      setError(err.response?.data?.message || 'Registration failed');
     }
   };
 

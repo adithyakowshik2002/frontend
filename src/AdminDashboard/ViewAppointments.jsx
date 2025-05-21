@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import axiosInstance from '../assets/axiosConfig'; 
+
 
 function ViewAppointments() {
   const location = useLocation();
@@ -17,13 +19,11 @@ function ViewAppointments() {
       return;
     }
 
-    fetch(`http://localhost:9090/api/appointments/appointments/${patientId}`)
+    axiosInstance
+      .get(`/api/appointments/appointments/${patientId}`) // Use axiosInstance here
       .then(res => {
-        if (!res.ok) throw new Error('Failed to fetch appointments');
-        return res.json();
-      })
-      .then(data => {
-        setAppointments(data);
+        setAppointments(res.data);
+        console.log(res.data);
         setLoading(false);
       })
       .catch(err => {
@@ -35,6 +35,18 @@ function ViewAppointments() {
 
   const handleBack = () => {
     navigate(-1); // Go back to previous page
+  };
+
+  // Format date to a more readable format
+  const formatDate = (date) => {
+    const d = new Date(date);
+    return `${d.getMonth() + 1}/${d.getDate()}/${d.getFullYear()}`;
+  };
+
+  // Format time to a readable 12-hour format
+  const formatTime = (time) => {
+    const d = new Date(time);
+    return `${d.getHours() % 12 || 12}:${d.getMinutes().toString().padStart(2, '0')} ${d.getHours() >= 12 ? 'PM' : 'AM'}`;
   };
 
   return (
@@ -61,8 +73,8 @@ function ViewAppointments() {
             {appointments.map(appt => (
               <tr key={appt.appointmentId}>
                 <td>{appt.appointmentId}</td>
-                <td>{appt.appointmentDate}</td>
-                <td>{appt.timeslot}</td>
+                <td>{formatDate(appt.appointmentDate)}</td>
+                <td>{(appt.timeslot)}</td>
                 <td>{appt.appointmentType}</td>
                 <td>{appt.status}</td>
               </tr>

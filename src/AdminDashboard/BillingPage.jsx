@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import axiosInstance from '../assets/axiosConfig'; 
 import './BillingPage.css';
 
 function BillingPage() {
@@ -17,27 +18,19 @@ function BillingPage() {
     if (!appointment) return;
 
     const previewUrl = isIP
-      ? `http://localhost:9090/api/billing/preview/ip/${appointment.appointmentId}`
-      : `http://localhost:9090/api/billing/preview/op/${appointment.appointmentId}`;
+      ? `/api/billing/preview/ip/${appointment.appointmentId}`
+      : `/api/billing/preview/op/${appointment.appointmentId}`;
 
-    fetch(previewUrl)
+    axiosInstance
+      .get(previewUrl)
       .then(res => {
-        if (res.status === 409) {
-          // Billing already exists
+        if (res.status === 409 || res.data?.message === 'Billing already recorded') {
           setError('Billing already recorded for this appointment.');
           navigate('/view-billing', {
-            state: { patient, appointment ,
-               from: '/view-patients'
-            }
+            state: { patient, appointment, from: '/view-patients' }
           });
-          
-        }
-        return res.json();
-      })
-      .then(data => {
-        if (data) {
-          console.log('Billing preview data:', data);
-          setBillingPreview(data);
+        } else {
+          setBillingPreview(res.data);
           setLoading(false);
         }
       })
@@ -50,18 +43,16 @@ function BillingPage() {
 
   const handlePayNow = () => {
     const payUrl = isIP
-      ? 'http://localhost:9090/api/billing/discharge?appointmentId=' + appointment.appointmentId
-      : `http://localhost:9090/api/billing/op/${appointment.appointmentId}`;
+      ? `/api/billing/discharge?appointmentId=${appointment.appointmentId}`
+      : `/api/billing/op/${appointment.appointmentId}`;
 
-    fetch(payUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: isIP ? JSON.stringify(appointment) : null,
-    })
-      .then(res => res.json())
-      .then(data => {
+    const payload = isIP ? appointment : {};
+
+    axiosInstance
+      .post(payUrl, payload)
+      .then(res => {
         alert('Payment recorded successfully!');
-        setBillingPreview(data);
+        setBillingPreview(res.data);
         setIsPaid(true);
       })
       .catch(err => {

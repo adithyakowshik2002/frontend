@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./patientsPage.css";
+import axiosInstance from "../assets/axiosConfig"; 
 
 const PatientsPage = () => {
   const [patients, setPatients] = useState([]);
@@ -7,48 +8,35 @@ const PatientsPage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Retrieve userId, jwtToken, and role from localStorage
     const email = localStorage.getItem("email");
     const jwt = localStorage.getItem("jwt");
     const role = localStorage.getItem("role");
-  
-    console.log("email is this ",email);
 
-    // Check if user is not logged in or is not a doctor
-    if (!userId || !jwt || role !== "ROLE_DOCTOR") {
+    console.log("email is this ", email);
+
+    if (!email || !jwt || role !== "DOCTOR") {
       setError("You are not authorized or logged in.");
       setLoading(false);
       return;
     }
 
-    // Step 1: Get doctorId using userId
     const fetchDoctorId = async () => {
       try {
-        const doctorRes = await fetch(`http://localhost:9090/api/doctors/user/${userId}`, {
-          headers: {
-            Authorization: `Bearer ${jwt}`, 
-          },
-        });
+        const doctorRes = await axiosInstance.get(`/api/doctors/email/${email}`);
+        const doctorData = doctorRes.data;
 
-        const doctorData = await doctorRes.json();
-
-        if (!doctorData || !doctorData.doctorId) {
+        if (!doctorData || !doctorData.id) {
           setError("Doctor not found.");
           setLoading(false);
           return;
         }
 
-        const doctorId = doctorData.doctorId;
+        const doctorId = doctorData.id;
 
-        // Step 2: Fetch patients using doctorId
-        const patientRes = await fetch(`http://localhost:9090/api/appointments/fetch-appointments/${doctorId}`, {
-          headers: {
-            Authorization: `Bearer ${jwt}`, // Add JWT token to the header
-          },
-        });
-console.log(patientRes); // Log the response for debugging
-        const patientData = await patientRes.json();
-        console.log("Patient Data:", patientData); // Log the patient data for debugging
+        const patientRes = await axiosInstance.get(`/api/appointments/fetch-appointments/${doctorId}`);
+        const patientData = patientRes.data;
+
+        console.log("Patient Data:", patientData);
         setPatients(patientData);
       } catch (err) {
         console.error(err);
@@ -59,7 +47,7 @@ console.log(patientRes); // Log the response for debugging
     };
 
     fetchDoctorId();
-  }, []); // Empty dependency array ensures this runs once when the component mounts
+  }, []);
 
   if (loading) return <p className="loading-message">Loading patients...</p>;
   if (error) return <p className="error-message">{error}</p>;
@@ -73,9 +61,9 @@ console.log(patientRes); // Log the response for debugging
         patients.map((patient) => (
           <div className="patient-card" key={patient.appointmentId}>
             <p><strong>Name:</strong> {patient.patientName}</p>
-            <p><strong>AppointmentDate:</strong> {patient.appointmentDate}</p>
+            <p><strong>Appointment Date:</strong> {patient.appointmentDate}</p>
             <p><strong>Time Slot:</strong> {patient.timeslot}</p>
-            <p><strong>AppointmentType:</strong>{patient.appointmentType}</p>
+            <p><strong>Appointment Type:</strong> {patient.appointmentType}</p>
           </div>
         ))
       )}

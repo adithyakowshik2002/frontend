@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './SavePrescription.css';
+import axiosInstance from '../assets/axiosConfig'; // adjust path
 
 function SavePrescription() {
   const { state } = useLocation();
@@ -37,7 +38,7 @@ function SavePrescription() {
     setMedicines(updated);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const payload = {
@@ -45,25 +46,14 @@ function SavePrescription() {
       medicines
     };
 
-    console.log(payload);
-
-    fetch(`http://localhost:9090/api/prescriptions/save-prescription`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    })
-      .then(res => {
-        if (!res.ok) throw new Error('Failed to save prescription');
-        return res.json();
-      })
-      .then(data => {
-        alert("Prescription saved successfully!");
-        navigate('/view-patients');
-      })
-      .catch(err => {
-        console.error(err);
-        alert("Error saving prescription.");
-      });
+    try {
+      await axiosInstance.post('/api/prescriptions/save-prescription', payload);
+      alert('Prescription saved successfully!');
+      navigate('/view-patients');
+    } catch (err) {
+      console.error(err);
+      alert('Error saving prescription.');
+    }
   };
 
   return (
@@ -125,3 +115,4 @@ function SavePrescription() {
 }
 
 export default SavePrescription;
+

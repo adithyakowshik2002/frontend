@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import axiosInstance from '../assets/axiosConfig'; 
 import './FetchBillingInfo.css';
 
 function FetchBillingInfo() {
@@ -18,25 +19,23 @@ function FetchBillingInfo() {
 
     const fetchBillingDetails = async () => {
       try {
-        const response = await fetch(`http://localhost:9090/api/billing/${appointment.appointmentId}`);
+        const response = await axiosInstance.get(`/api/billing/${appointment.appointmentId}`);
 
         if (response.status === 409) {
-          const data = await response.json().catch(() => ({}));
-          setError(data.message || "Billing already recorded.");
+          setError(response.data.message || "Billing already recorded.");
           setLoading(false);
           return;
         }
 
-        if (!response.ok) {
-          throw new Error("Something went wrong while fetching billing details.");
-        }
-
-        const data = await response.json();
-        setBillingDetails(data);
+        setBillingDetails(response.data);
         setLoading(false);
       } catch (err) {
         console.error('Failed to fetch billing details:', err);
-        setError('Failed to load billing details.');
+        if (err.response?.status === 409) {
+          setError(err.response.data?.message || 'Billing already recorded.');
+        } else {
+          setError('Failed to load billing details.');
+        }
         setLoading(false);
       }
     };
@@ -51,19 +50,19 @@ function FetchBillingInfo() {
       navigate('/view-patients');
     }
   };
-  
 
   if (!patient || !appointment) return <p>Invalid billing data.</p>;
   if (loading) return <p>Loading billing details...</p>;
-  if (error) return (
-    <div className="billing-container">
-      <h2>Error</h2>
-      <p className="error-message">{error}</p>
-      <button className="btn back-btn" onClick={handleGoBack}>
-        Go Back
-      </button>
-    </div>
-  );
+  if (error)
+    return (
+      <div className="billing-container">
+        <h2>Error</h2>
+        <p className="error-message">{error}</p>
+        <button className="btn back-btn" onClick={handleGoBack}>
+          Go Back
+        </button>
+      </div>
+    );
 
   return (
     <div className="billing-container">

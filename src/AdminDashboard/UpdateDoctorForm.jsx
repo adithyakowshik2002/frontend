@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import './UpdateDoctorForm.css';
 
-import axios from "axios";
+import axiosInstance from '../assets/axiosConfig'; 
 
 const UpdateDoctorForm = () => {
   const { doctorId } = useParams();
@@ -19,14 +19,13 @@ const UpdateDoctorForm = () => {
   });
 
   const [profileImage, setProfileImage] = useState(null);
-  const [existingImage, setExistingImage] = useState(null); // 🟡 New: For preview
+  const [existingImage, setExistingImage] = useState(null);
 
-  // 🔵 Load doctor data on mount
   useEffect(() => {
     if (!doctorId) return;
 
-    axios
-      .get(`http://localhost:9090/api/doctors/get-doctor/${doctorId}`)
+    axiosInstance
+      .get(`/api/doctors/get-doctor/${doctorId}`)
       .then((response) => {
         const {
           name,
@@ -37,9 +36,8 @@ const UpdateDoctorForm = () => {
           experienceYears,
           location,
           email,
-          profileImageBase64 // Base64 or URL (decide based on backend)
+          profileImageBase64
         } = response.data;
-        console.log("Doctor Data:", response.data); // Debugging
 
         setDoctorData({
           name,
@@ -52,10 +50,8 @@ const UpdateDoctorForm = () => {
           email
         });
 
-        // If image comes as Base64 byte array, prefix with data type
         if (profileImageBase64) {
           setExistingImage(`data:image/jpeg;base64,${profileImageBase64}`);
-         // console.log("Existing Image:", profileImageBase64); 
         }
       })
       .catch((error) => {
@@ -63,7 +59,6 @@ const UpdateDoctorForm = () => {
       });
   }, [doctorId]);
 
-  // 🔵 Input change
   const handleChange = (e) => {
     const { name, value } = e.target;
     setDoctorData((prev) => ({
@@ -72,7 +67,6 @@ const UpdateDoctorForm = () => {
     }));
   };
 
-  // 🔵 Form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -87,8 +81,8 @@ const UpdateDoctorForm = () => {
     }
 
     try {
-      const response = await axios.put(
-        `http://localhost:9090/api/doctors/update/${doctorId}`,
+      const response = await axiosInstance.put(
+        `/api/doctors/update/${doctorId}`,
         formData,
         {
           headers: {
@@ -108,7 +102,7 @@ const UpdateDoctorForm = () => {
     <div className="update-doctor-form-container">
       <h2>Update Doctor</h2>
       <form onSubmit={handleSubmit}>
-
+        {/* Form fields */}
         <div>
           <label htmlFor="name">Name</label><br />
           <input id="name" name="name" value={doctorData.name} onChange={handleChange} required /><br />
@@ -148,13 +142,12 @@ const UpdateDoctorForm = () => {
           <label htmlFor="email">Email</label><br />
           <input id="email" name="email" value={doctorData.email} onChange={handleChange} type="email" required /><br />
         </div>
-        <div>
-  <label htmlFor="profileImage">Profile Image</label><br />
-  <small style={{ color: 'red' }}>Optional</small>
-  <input id="profileImage" type="file" accept="image/*" onChange={(e) => setProfileImage(e.target.files[0])} /><br />
-  
-</div>
 
+        <div>
+          <label htmlFor="profileImage">Profile Image</label><br />
+          <small style={{ color: 'red' }}>Optional</small>
+          <input id="profileImage" type="file" accept="image/*" onChange={(e) => setProfileImage(e.target.files[0])} /><br />
+        </div>
 
         {existingImage && !profileImage && (
           <div>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useLocation } from 'react-router-dom';
+import axiosInstance from '../assets/axiosConfig'; // Correct path to your configured Axios
 
 const IpBillingPreview = () => {
   const [previewData, setPreviewData] = useState(null);
@@ -8,10 +8,11 @@ const IpBillingPreview = () => {
   const [message, setMessage] = useState('');
   const location = useLocation();
   const appointmentId = location.state?.appointmentId;
+
   const fetchPreview = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`http://localhost:9090/api/billing/ip/daily-log/preview/${appointmentId}`);
+      const response = await axiosInstance.get(`/api/billing/ip/daily-log/preview/${appointmentId}`);
       setPreviewData(response.data);
       setMessage('');
     } catch (error) {
@@ -24,8 +25,8 @@ const IpBillingPreview = () => {
   const generateIpBill = async () => {
     try {
       setLoading(true);
-      const response = await axios.post(`http://localhost:9090/api/billing/ip/daily-log/${appointmentId}`);
-      setMessage('IP Bill successfully generated need to be paid');
+      await axiosInstance.post(`/api/billing/ip/daily-log/${appointmentId}`);
+      setMessage('IP Bill successfully generated and needs to be paid');
     } catch (error) {
       setMessage('Failed to generate IP bill or already generated');
     } finally {

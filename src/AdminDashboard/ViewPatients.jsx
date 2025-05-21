@@ -1,86 +1,91 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ViewPatients.css';
+import axiosInstance from '../assets/axiosConfig'; // Import axiosInstance
 
 function ViewPatients() {
   const [patients, setPatients] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('http://localhost:9090/api/patients/getallpatients')
-      .then(res => res.json())
-      .then(data => setPatients(data))
-      .catch(err => console.error(err));
+    // Use axiosInstance to fetch patient data
+    axiosInstance
+      .get('/api/patients/getallpatients')  // Assuming '/patients/getallpatients' is the endpoint
+      .then((res) => {
+        setPatients(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => console.error('Error fetching patients:', err));
   }, []);
+
   const handleSavePrescription = (patient) => {
     const appointment = patient.appointments?.[0];
-    console.log(appointment.appointmentId);// You may adjust this logic for selecting correct appointment
+    console.log(appointment?.appointmentId); // Adjust this logic if needed
     if (!appointment) {
       alert("No appointment found to save prescription.");
       return;
     }
-  
+
     navigate('/save-prescription', {
       state: {
-        appointmentId: appointment.appointmentId
-      }
+        appointmentId: appointment.appointmentId,
+      },
     });
   };
+
   const handleViewPrescriptions = (patientId) => {
     navigate('/view-prescriptions', { state: { patientId } });
   };
-  
+
   const handleGoBack = () => {
-    
-      navigate('/admin-dashboard');
-    
+    navigate('/admin-dashboard');
   };
+
   const handleGenerateIpDailyLog = (patient) => {
     if (!patient.appointments || patient.appointments.length === 0) {
       alert("No appointment found for IP billing.");
       return;
     }
-  
-    const ipAppointment = patient.appointments.find(appt => appt.appointmentType === 'IP');
-    console.log(ipAppointment);
+
+    const ipAppointment = patient.appointments.find((appt) => appt.appointmentType === 'IP');
     if (!ipAppointment) {
       alert("No IP appointment found for this patient.");
       return;
     }
-  
+
     navigate('/daily-ip-billing', {
       state: {
-        appointmentId: ipAppointment.appointmentId
-      }
+        appointmentId: ipAppointment.appointmentId,
+      },
     });
   };
+
   const handleViewAppointments = (patientId) => {
     navigate('/view-appointments', { state: { patientId } });
   };
-  
-  
+
   const handleGenerateBill = (patient) => {
     if (!patient.appointments || patient.appointments.length === 0) {
       alert("No appointment found for billing.");
       return;
     }
 
-    const ipAppointment = patient.appointments.find(appt => appt.appointmentType === 'IP');
+    const ipAppointment = patient.appointments.find((appt) => appt.appointmentType === 'IP');
     const selectedAppointment = ipAppointment || patient.appointments[0];
 
     navigate('/billing', {
       state: {
         patient,
-        appointment: selectedAppointment
-      }
+        appointment: selectedAppointment,
+      },
     });
   };
 
   return (
     <div className="patients-container">
       <div style={{ marginBottom: '1rem' }}>
-      <button className="btn" onClick={handleGoBack}>⬅ Go Back</button>
-    </div>
+        <button className="btn" onClick={handleGoBack}>⬅ Go Back</button>
+      </div>
       <h2 className="heading">Patients List</h2>
       <ul className="card-list">
         {patients.map((patient) => (
@@ -95,7 +100,7 @@ function ViewPatients() {
             {patient.appointments && patient.appointments.length > 0 ? (
               <div className="card-line">
                 <strong>Appointment Type:</strong>{" "}
-                {patient.appointments.find(appt => appt.appointmentType === 'IP')?.appointmentType || 'OP'}
+                {patient.appointments.find((appt) => appt.appointmentType === 'IP')?.appointmentType || 'OP'}
               </div>
             ) : (
               <div className="card-line"><strong>Appointment Type:</strong> None</div>
@@ -103,30 +108,25 @@ function ViewPatients() {
 
             <div className="card-actions-patient">
               <button className="btn" onClick={() => handleGenerateBill(patient)}>Generate Bill</button>
-              <button className="btn" onClick={()=>handleViewAppointments(patient.id)}>View Appointments</button>
+              <button className="btn" onClick={() => handleViewAppointments(patient.id)}>View Appointments</button>
               <button className="btn" onClick={() => handleViewPrescriptions(patient.id)}>View Prescriptions</button>
 
               <button className="btn" onClick={() => handleGenerateIpDailyLog(patient)}>
-  Generate IP Daily Log
-</button>
+                Generate IP Daily Log
+              </button>
 
-             
               <button className="btn" onClick={() => handleSavePrescription(patient)}>
-  Save Prescription
-</button>
- 
+                Save Prescription
+              </button>
             </div>
           </li>
         ))}
       </ul>
       <div style={{ marginBottom: '1rem' }}>
-      <button className="btn" onClick={handleGoBack}>⬅ Go Back</button>
-    </div>
+        <button className="btn" onClick={handleGoBack}>⬅ Go Back</button>
+      </div>
     </div>
   );
- 
-  
 }
 
 export default ViewPatients;
-

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './DoctorStyle.css';
 import '../Model/ModelStyle.css'; 
+import axiosInstance from '../assets/axiosConfig'; // Import the axios instance
 
 const DoctorForm = () => {
   const [doctor, setDoctor] = useState({
@@ -14,8 +15,9 @@ const DoctorForm = () => {
     email: '',
   });
   const [profileImage, setProfileImage] = useState(null);
-  const [showModel,setShowModel] = useState(false);
-  const [modelMessage,setModelMessage] = useState('');
+  const [showModel, setShowModel] = useState(false);
+  const [modelMessage, setModelMessage] = useState('');
+
   // Handle input changes for text fields
   const handleChange = (e) => {
     setDoctor({ ...doctor, [e.target.name]: e.target.value });
@@ -32,15 +34,13 @@ const DoctorForm = () => {
 
     const formData = new FormData();
     formData.append('profileImage', profileImage);
-
     formData.append('doctorJson', JSON.stringify(doctor));
-    try {
-      const response = await fetch('http://localhost:9090/api/doctors/creating', {
-        method: 'POST',
-        body: formData,
-      });
 
-      if (response.ok) {
+    try {
+      const response = await axiosInstance.post('/api/doctors/creating', formData);
+   console.log(response.data);
+   console.log(response.status);
+      if (response.status === 201) {
         setModelMessage('Doctor added Successfully!');
         setShowModel(true);
         setDoctor({
@@ -67,8 +67,7 @@ const DoctorForm = () => {
 
   const closeModel = () => {
     setShowModel(false);
-
-  }
+  };
 
   return (
     <div className="doctor-form-container">
@@ -81,7 +80,7 @@ const DoctorForm = () => {
             name="profileImage"
             onChange={handleImageChange}
             accept="image/*"
-            placeholder='Select Profile Image'
+            placeholder="Select Profile Image"
             required
           />
         </label>
@@ -91,54 +90,55 @@ const DoctorForm = () => {
           <input
             type="text"
             name="name"
-            placeholder='Enter Doctor Name'
+            placeholder="Enter Doctor Name"
             value={doctor.name}
             onChange={handleChange}
             required
           />
         </label>
-        
+
         <label>
           Registration Number:
           <input
             type="text"
             name="registrationNumber"
-            placeholder='Enter Registration Number'
+            placeholder="Enter Registration Number"
             value={doctor.registrationNumber}
             onChange={handleChange}
             required
           />
         </label>
-        
 
         <label>
           Qualifications:
           <input
             type="text"
             name="qualifications"
-            placeholder='Enter Qualifications'
+            placeholder="Enter Qualifications"
             value={doctor.qualifications}
             onChange={handleChange}
             required
           />
         </label>
+
         <label>
           Email:
           <input
             type="email"
             name="email"
-            placeholder='Enter Email'
+            placeholder="Enter Email"
             value={doctor.email}
             onChange={handleChange}
             required
           />
         </label>
+
         <label>
           Specialization:
           <input
             type="text"
             name="specialization"
-            placeholder='Enter Specialization'
+            placeholder="Enter Specialization"
             value={doctor.specialization}
             onChange={handleChange}
             required
@@ -150,7 +150,7 @@ const DoctorForm = () => {
           <input
             type="text"
             name="languages"
-            placeholder='Enter Languages Known'
+            placeholder="Enter Languages Known"
             value={doctor.languages}
             onChange={handleChange}
             required
@@ -162,7 +162,7 @@ const DoctorForm = () => {
           <input
             type="number"
             name="experienceYears"
-            placeholder='Enter Years of Experience'
+            placeholder="Enter Years of Experience"
             value={doctor.experienceYears}
             onChange={handleChange}
             required
@@ -174,7 +174,7 @@ const DoctorForm = () => {
           <input
             type="text"
             name="location"
-            placeholder='Enter Location'
+            placeholder="Enter Location"
             value={doctor.location}
             onChange={handleChange}
             required
@@ -184,11 +184,15 @@ const DoctorForm = () => {
         <button type="submit">Save Doctor</button>
       </form>
 
-      {showModel && <div className="modal">
-        <p>{modelMessage}</p>
-        <button onClick={closeModel}>Close</button>
-      </div>}
-      <button className="back-button" onClick={() => window.history.back()}>← Back</button>
+      {showModel && (
+        <div className="modal">
+          <p>{modelMessage}</p>
+          <button onClick={closeModel}>Close</button>
+        </div>
+      )}
+      <button className="back-button" onClick={() => window.history.back()}>
+        ← Back
+      </button>
     </div>
   );
 };

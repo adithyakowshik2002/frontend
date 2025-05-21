@@ -1,6 +1,6 @@
-
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import axiosInstance from '../assets/axiosConfig'; // Adjust if path differs
 import './DoctorAppointments.css';
 
 function DoctorAppointments() {
@@ -8,19 +8,16 @@ function DoctorAppointments() {
   const [appointments, setAppointments] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:9090/api/appointments/fetch-appointments/${doctorId}`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Failed to fetch appointments');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setAppointments(data);
-      })
-      .catch((error) => {
+    const fetchAppointments = async () => {
+      try {
+        const response = await axiosInstance.get(`/api/appointments/fetch-appointments/${doctorId}`);
+        setAppointments(response.data);
+      } catch (error) {
         console.error('Error fetching appointments:', error);
-      });
+      }
+    };
+
+    fetchAppointments();
   }, [doctorId]);
 
   return (
@@ -44,7 +41,6 @@ function DoctorAppointments() {
             {appointments.map((appointment) => (
               <tr key={appointment.appointmentId} className="appointments-row">
                 <td className="appointments-cell" data-label="Appointment ID">{appointment.appointmentId}</td>
-
                 <td className="appointments-cell">{appointment.patientName}</td>
                 <td className="appointments-cell">{appointment.appointmentDate}</td>
                 <td className="appointments-cell">{appointment.timeslot}</td>

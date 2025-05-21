@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
-import axios from 'axios';
 import { useParams } from 'react-router-dom';  // Import useParams to get doctorId from URL
+import axiosInstance from '../assets/axiosConfig';  // Import the custom axiosInstance
 
 const DoctorSchedule = () => {
   const { doctorId } = useParams(); // Get doctorId from URL
@@ -17,9 +17,9 @@ const DoctorSchedule = () => {
     const formattedDate = selectedDate.toISOString().split('T')[0]; // Convert to yyyy-MM-dd format
 
     try {
-      // Make POST request to backend to schedule availability
-      const response = await axios.post(
-        `http://localhost:9090/api/doctors/${doctorId}/set-availability`,
+      // Make POST request to backend to schedule availability using axiosInstance
+      const response = await axiosInstance.post(
+        `/api/doctors/${doctorId}/set-availability`,
         {},
         { params: { availableDate: formattedDate } }
       );
@@ -52,3 +52,4 @@ const DoctorSchedule = () => {
 };
 
 export default DoctorSchedule;
+

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './Appointment.css';
 import { useNavigate } from 'react-router-dom';
-
+import axiosInstance from '../assets/axiosConfig'; // Import axiosInstance
+//import axios from 'axios';
 function BookAppointmentPage() {
   const [doctors, setDoctors] = useState([]);
   const [selectedDoctorId, setSelectedDoctorId] = useState(null);
@@ -11,10 +12,15 @@ function BookAppointmentPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('http://localhost:9090/api/doctors/getalldoctors')
-      .then((response) => response.json())
-      .then((data) => setDoctors(data))
-      .catch((error) => console.error('Error fetching doctors:', error));
+    // Fetching all doctors from http://localhost:9090/api/doctors/getalldoctors
+    axiosInstance
+      .get('/api/doctors/getalldoctors')
+      .then((response) => {
+        setDoctors(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching doctors:', error);
+      });
   }, []);
 
   const handleDoctorClick = (doctorId) => {
@@ -29,13 +35,13 @@ function BookAppointmentPage() {
     setSelectedDate(null);
 
     if (!availableDates[doctorId]) {
-      fetch(`http://localhost:9090/api/doctors/schedule-dates/${doctorId}`)
-        .then((res) => res.json())
-        .then((dates) => {
-          console.log(dates);
+      // Fetching available dates for the selected doctor from http://localhost:9090/api/doctors/schedule-dates/{doctorId}
+      axiosInstance
+        .get(`/api/doctors/schedule-dates/${doctorId}`)
+        .then((res) => {
           setAvailableDates((prevDates) => ({
             ...prevDates,
-            [doctorId]: dates,
+            [doctorId]: res.data,
           }));
         })
         .catch((error) => {
@@ -51,9 +57,8 @@ function BookAppointmentPage() {
   const handleFillFormClick = () => {
     if (selectedDoctorId && selectedDate) {
       navigate(`/fill-patient-form/${selectedDoctorId}/${selectedDate}`);
-    }
-    else{
-      alert("Please select a doctor and a date before proceeding.");
+    } else {
+      alert('Please select a doctor and a date before proceeding.');
     }
   };
 
@@ -129,4 +134,3 @@ function BookAppointmentPage() {
 }
 
 export default BookAppointmentPage;
-

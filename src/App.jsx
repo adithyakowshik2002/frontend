@@ -23,6 +23,10 @@ import DailyIpBillingPreview from './AdminDashboard/DailyIpBillingPreview';
 import ViewAppointments from './AdminDashboard/ViewAppointments';
 import DoctorAppointments from './AdminDashboard/DoctorAppointments';
 import UpdateDoctorForm from './AdminDashboard/UpdateDoctorForm';
+import AadharValidation from './pages/AadharValidation';
+import BookAppointmentExisting from './pages/BookAppointmentExisting';
+import Reschedule from './pages/Reschedule';
+import Confirmation from './pages/Confirmation';
 
 function App() {
   return (
@@ -40,6 +44,7 @@ function App() {
   element={<PatientForm />}
 
 />
+
       <Route path="/edit-doctordata/:doctorId" element={<UpdateDoctorForm />} /> 
       <Route path="/view-appointments" element={<ViewAppointments />} />
 
@@ -54,6 +59,11 @@ function App() {
           <Route path="/view-doctors" element={<ViewDoctors />} />
           <Route path="/view-patients" element={<ViewPatients />} />
           <Route path="/doctor-appointments/:doctorId" element={<DoctorAppointments />} />
+          <Route path="/validate-aadhar" element={<AadharValidation/>}/>
+          <Route path="/book-appointment-existing/:patientId" element={<BookAppointmentExisting />} />
+        <Route path="/reschedule" element={<Reschedule/>}/>
+        <Route path="/confirmation" element={<Confirmation/>}/>
+
       {/* Temporarily comment these out */}
       {/* <Route path="/admin/dashboard" element={<AdminDashboard />} /> */}
       {/* <Route path="/unauthorized" element={<Unauthorized />} /> */}
